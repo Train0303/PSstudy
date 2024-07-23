@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 public class Main {
 	static int n;
 	static List<List<Integer>> graph = new ArrayList<>();
-	static int result = 0;
+	static long result = 0;
 	public static void main(String[] args) throws IOException {
 		input();
 		solve();
@@ -16,22 +16,23 @@ public class Main {
 	
 	public static void solve() {
 		dfs(1, 1);
-		System.out.println(result - getCount(n));
+		System.out.println(result);
 	}
-	public static int dfs(int s, int prev) {
+	public static int dfs(int v, int prev) {
 		
 		int childNodes = 1;
-		for (int adj : graph.get(s)) {
+		for (int adj : graph.get(v)) {
 			if (adj != prev) {
-				childNodes += dfs(adj, s);
+				childNodes += dfs(adj, v);
 			}
 		}
-		
-		result += getCount(n) - getCount(n-childNodes); 
+		if (v != 1) {
+			result += getCount(n) - getCount(n-childNodes);
+		} 
 		return childNodes;
 	}
-	public static int getCount(int node) {
-		return node*(node-1)/2;	
+	public static long getCount(int node) {
+		return (long)node*(long)(node-1)/2;	
 	}
 	
 	public static void input() throws IOException {
